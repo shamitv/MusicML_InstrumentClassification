@@ -7,8 +7,8 @@ public class InstrumentChangeTest {
     public static void main(String[] args) throws Exception{
         Synthesizer synthesizer = MidiSystem.getSynthesizer();
         var instruments=synthesizer.getDefaultSoundbank().getInstruments();
-        String midiPath = Config.RAW_MIDI_DIR + File.separator + "a"
-                + File.separator + "a3305a61f9af7680de8ac93965f962f9.mid" ;
+        String midiPath = Config.RAW_ADDITIONAL_DIR + File.separator + "t"
+                + File.separator + "twinkle_twinkle_single_track.mid" ;
         String midiOutPath = Config.EXPLORATION_DIR + File.separator
                 + "a3305a61f9af7680de8ac93965f962f9.mid" ;
         Sequence seq_in = MidiSystem.getSequence(new File(midiPath));

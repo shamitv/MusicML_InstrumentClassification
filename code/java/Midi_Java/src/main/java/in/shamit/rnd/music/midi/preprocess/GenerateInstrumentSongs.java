@@ -51,21 +51,41 @@ public class GenerateInstrumentSongs {
         return path;
     }
 
+    static String getInputSongPath(String id, boolean additional_path){
+        String baseDir = null;
+        if(additional_path){
+            baseDir = Config.RAW_ADDITIONAL_DIR;
+        }else{
+            baseDir = Config.RAW_MIDI_DIR;
+        }
+        String path = baseDir + File.separator +
+                id.substring(0,1) + File.separator + id ;
+
+        return path;
+    }
+
+
     static String getOutputSongPath(String id, String instrument){
         String path = Config.GENERATED_SONGS + File.separator + instrument + File.separator
                 + id.substring(0,1) + File.separator + id ;
         return path;
     }
 
-    private static void generateSongs(String s) {
-        String inp = getInputSongPath(s);
+    public static void generateSongs(String s) {
+        final String inp = getInputSongPath(s);
         instruments.keySet().stream().forEach(i->{
             int instrument_id = instruments.get(i);
             String out_path = getOutputSongPath(s,i);
             try {
                 Path p = Paths.get(out_path);
                 Files.createDirectories(p.getParent());
-                ChangeInstrument.changeInstrument(inp,out_path,instrument_id);
+                File f = new File(inp);
+                if(f.exists()){
+                    ChangeInstrument.changeInstrument(inp,out_path,instrument_id);
+                }else{
+                    ChangeInstrument.changeInstrument(getInputSongPath(s,true),out_path,instrument_id);
+                }
+
             } catch (Exception e) {
                 throw new RuntimeException("Error processing : " + s +" Instrument : " + i,e);
             }
